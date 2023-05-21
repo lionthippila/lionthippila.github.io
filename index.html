@@ -122,12 +122,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-
-        document.addEventListener("DOMContentLoaded", function() {
             var audio = new Audio("https://files.catbox.moe/qjsah7.mp3");
+            audio.volume = 0.05;  // กำหนดระดับเสียงที่ต้องการ
             audio.play();
-            audio.volume = 0.05;
-        });
+
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     var audio = new Audio("https://files.catbox.moe/qjsah7.mp3");
+        //     audio.play();
+        //     audio.volume = 0.05;
+        // });
         AOS.init();
         var textWrapper = document.querySelector('.ml13 ');
         textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter '>$&</span>");
