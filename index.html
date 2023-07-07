@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,250 +14,57 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <title>lion_thippila</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial;
-            font-size: 17px;
-            background-color: black;
-            font-family: "Kanit", sans-serif;
-        }
-
-        #myVideo {
-            position: fixed;
-            min-width: 100%;
-            min-height: 100%;
-            -webkit-filter: blur(5px);
-            -moz-filter: blur(5px);
-            -o-filter: blur(5px);
-            -ms-filter: blur(5px);
-            filter: blur(5px);
-        }
-
-        .img-content {
-            color: #fff;
-            position: absolute !important;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .ml13 {
-            font-size: 3em;
-            text-transform: uppercase;
-            letter-spacing: 0em;
-            font-weight: 600;
-            color: rgb(255, 255, 255);
-        }
-
-        .ml13 .letter {
-            display: inline-block;
-            line-height: 1em;
-        }
-
-        .content-social {
-        position: fixed;
-        /* Adjust bottom and left values for positioning */
-        bottom: 5%;
-        left: 50%;
-        /* Use transform to center the buttons horizontally */
-        transform: translateX(-50%);
-        /* Rest of the CSS */
-    }
-
-    /* Add media query for smaller screens */
-    @media (max-width: 768px) {
-        .content-social {
-            /* Adjust bottom value for smaller screens */
-            bottom: 3%;
-        }
-    }
-
-    @media (max-width: 390px) {
-        .content-social {
-            /* Adjust bottom value for smaller screens */
-            width: 70%;
-            left: 55%;
-            /* background-color: rebeccapurple; */
-        }
-    }
-
-    /* Add media query for even smaller screens */
-    @media (max-width: 576px) {
-        .content-social {
-            /* Adjust bottom value for even smaller screens */
-            bottom: 2%;
-        }
-    }
-    .content-social a.btn {
-        /* Adjust button size as needed */
-        font-size: 2rem;
-        /* Rest of the CSS */
-    }
-
-    /* Add media query for smaller screens */
-    @media (max-width: 576px) {
-        .content-social a.btn {
-            /* Adjust button size for smaller screens */
-            font-size: 1.5rem;
-        }
-    }
-
-
-        .btn-check:focus+.btn,
-        .btn:focus {
-            outline: 0;
-            box-shadow: none;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body id="body" data-aos-easing="ease" data-aos-duration="400" data-aos-delay="0">
-    <div class="content">
-        <img id="myVideo" src="https://cdn.discordapp.com/attachments/740533419670372405/977441776006729758/pexels-aarti-vijay-2693529.jpg">
+<body>
+    <div class="container">
+        <img id="Background" src="https://cdn.discordapp.com/attachments/740533419670372405/977441776006729758/pexels-aarti-vijay-2693529.jpg">
         <div class="text-center img-content">
-            <img style="
-        width: 200px;
-        border-radius: 50%;
-        -webkit-animation-name: hvr-bob-float, hvr-bob;
-        animation-name: hvr-bob-float, hvr-bob;
-        -webkit-animation-duration: .3s, 1.5s;
-        animation-duration: .3s, 1.5s;
-        -webkit-animation-delay: 0s, .3s;
-        animation-delay: 0s, .3s;
-        -webkit-animation-timing-function: ease-out, ease-in-out;
-        animation-timing-function: ease-out, ease-in-out;
-        -webkit-animation-iteration-count: 1, infinite;
-        animation-iteration-count: 1, infinite;
-        -webkit-animation-fill-mode: forwards;
-        animation-fill-mode: forwards;
-        -webkit-animation-direction: normal, alternate;
-        animation-direction: normal, alternate;" 
-        src="https://cdn.discordapp.com/attachments/732556321169342517/1110205781736951808/6729AC8C-3B2A-4EDD-8EBA-E47777CB94BE.jpg" alt="Artist">
+            <img id="vincent" src="https://cdn.discordapp.com/attachments/732556321169342517/1110205781736951808/6729AC8C-3B2A-4EDD-8EBA-E47777CB94BE.jpg" alt="Artist">
             <div>
-              <h1 class="ml13">
-                <span class="letter" style="opacity: 0.5; transform: translateY(0px) translateZ(0px);">L</span>
-                <span class="letter" style="opacity: 0.5; transform: translateY(0px) translateZ(0px);">I</span>
-                <span class="letter" style="opacity: 0.5; transform: translateY(0px) translateZ(0px);">O</span>
-                <span class="letter" style="opacity: 0.5; transform: translateY(0px) translateZ(0px);">N</span>
-              </h1>
-             </div>
-
-            <div>
+                <h1 class="ml13">
+                    <span class="letter">L</span>
+                    <span class="letter">I</span>
+                    <span class="letter">O</span>
+                    <span class="letter">N</span> 
+                </h1>
+            </div>
+            <!-- <div>
                 <center data-aos="fade-up" data-aos-delay="800" data-aos-duration="500" class="aos-init aos-animate">
                     <hr style="width: 14%; height: 5px; margin-top: 10px;">
                 </center>
                 <div data-aos="fade-up" data-aos-delay="1000" data-aos-duration="500" class="aos-init">
                     <span class="txt-rotate" data-period="2000" data-rotate="[&quot;Siraphop Thippila&quot;, &quot;https://www.facebook.com/lion.thippila/&quot;]"><span class="wrap">SSS</span></span>
+                </div>
+            </div> -->
+        </div>
+        <div class="content-social">
+            <div>
+                <a href="https://twitter.com/WINRAR5555" target="_blank" class="btn hvr-buzz"><i class="bi bi-twitter" style="color:white;"></i></a>
+                <a href="https://www.facebook.com/lion.thippila/" target="_blank" class="btn hvr-buzz"><i class="bi bi-facebook" style="color:white;"></i></a>
+                <a href="https://www.instagram.com/lion_thippila/" target="_blank" class="btn hvr-buzz"><i class="bi bi-instagram" style="color:white;"></i></a>
+                <a href="https://www.youtube.com/channel/UCNh32EcdB0yzN8Nm6bdVm9w" target="_blank" class="btn hvr-buzz"><i class="bi bi-youtube" style="color:white;"></i></a>
             </div>
         </div>
     </div>
-
-
-    <div class="content-social">
-        <div>
-            <a href="https://twitter.com/WINRAR5555" target="_blank" class="btn hvr-buzz"><i class="bi bi-twitter" style="color:white;font-size:2rem;"></i></a>
-            <a href="https://www.facebook.com/lion.thippila/" target="_blank" class="btn hvr-buzz"><i class="bi bi-facebook" style="color:white;font-size:2rem;"></i></a>
-            <a href="https://www.instagram.com/lion_thippila/" target="_blank" class="btn hvr-buzz"><i class="bi bi-instagram" style="color:white;font-size:2rem;"></i></a>
-            <a href="https://www.youtube.com/channel/UCNh32EcdB0yzN8Nm6bdVm9w" target="_blank" class="btn hvr-buzz"><i class="bi bi-youtube" style="color:white;font-size:2rem;"></i></a>
-        </div>
-    </div>
-</div>
-
-<script>
-    var audio = new Audio("https://files.catbox.moe/2dab41.mp3");
-    $("#body").click(function() {
+    <script>
+        var audio = new Audio("https://files.catbox.moe/dtb65f.mp3");
+        audio.volume = 0.2; // กำหนดระดับเสียง
+        audio.loop = true; // กำหนดให้เพลงวนซ้ำ
         audio.play();
-        audio.volume = 0.05;
-    });
-    AOS.init();
-    var textWrapper = document.querySelector('.ml13');
-    textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
-    anime.timeline({
-        loop: false
-    })
-        .add({
-            targets: '.ml13 .letter',
-            translateY: [100, 0],
-            translateZ: 0,
-            opacity: [0, 1],
-            easing: "easeOutExpo",
-            duration: 1400,
-            delay: (el, i) => 300 + 30 * i
-        });
-    var TxtRotate = function(el, toRotate, period) {
-        this.toRotate = toRotate;
-        this.el = el;
-        this.loopNum = 0;
-        this.period = parseInt(period, 10) || 2000;
-        this.txt = ' ';
-        this.tick();
-        this.isDeleting = false;
-
-    };
-
-    TxtRotate.prototype.tick = function() {
-        var i = this.loopNum % this.toRotate.length;
-        var fullTxt = this.toRotate[i];
-
-
-        if (this.isDeleting) {
-            this.txt = fullTxt.substring(0, this.txt.length - 1);
-
-        } else {
-            this.txt = fullTxt.substring(0, this.txt.length + 1);
-
-        }
-
-        this.el.innerHTML = '<span class="wrap">' + this.txt + '</span>';
-        var that = this;
-        var delta = 300 - Math.random() * 100;
-
-        if (this.isDeleting) {
-            delta /= 2;
-        }
-
-        if (!this.isDeleting && this.txt === fullTxt) {
-            delta = this.period;
-            this.isDeleting = true;
-        } else if (this.isDeleting && this.txt === '') {
-            this.isDeleting = false;
-            this.loopNum++;
-            delta = 500;
-        }
-
-        setTimeout(function() {
-            that.tick();
-        }, delta);
-    };
-
-    window.onload = function() {
-        var elements = document.getElementsByClassName('txt-rotate');
-        for (var i = 0; i < elements.length; i++) {
-            var toRotate = elements[i].getAttribute('data-rotate');
-            var period = elements[i].getAttribute('data-period');
-            if (toRotate) {
-                new TxtRotate(elements[i], JSON.parse(toRotate), period);
-            }
-        }
-        var css = document.createElement('style');
-        css.type = 'text/css';
-        css.innerHTML = '.txt-rotate > .wrap { border-right: 0.08em solid #666; }';
-        document.body.appendChild(css);
-    };
-</script>
-
-<style type="text/css">
-    .txt-rotate > .wrap {
-        border-right: 0.08em solid #666;
-    }
-</style>
-
-<style type="text/css">
-    .txt-rotate > .wrap {
-        border-right: 0.08em solid #666;
-    }
-</style>
+        anime.timeline({
+            loop: false
+        })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [50, 0],
+                translateZ: 0,
+                opacity: [0, 1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            });
+    </script>
 </body>
 </html>
