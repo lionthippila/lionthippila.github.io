@@ -16,7 +16,7 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body id="body" data-aos-easing="ease" data-aos-duration="400" data-aos-delay="0">
     <div class="container">
         <img id="Background" src="https://cdn.discordapp.com/attachments/740533419670372405/977441776006729758/pexels-aarti-vijay-2693529.jpg">
         <div class="text-center img-content">
@@ -29,6 +29,14 @@
                     <span class="letter">N</span> 
                 </h1>
             </div>
+            <!-- <div>
+                <center data-aos="fade-up" data-aos-delay="800" data-aos-duration="500" class="aos-init aos-animate">
+                    <hr style="width: 14%; height: 5px; margin-top: 10px;">
+                </center>
+                <div data-aos="fade-up" data-aos-delay="1000" data-aos-duration="500" class="aos-init">
+                    <span class="txt-rotate" data-period="2000" data-rotate="[&quot;Siraphop Thippila&quot;, &quot;https://www.facebook.com/lion.thippila/&quot;]"><span class="wrap">SSS</span></span>
+                </div>
+            </div> -->
         </div>
         <div class="content-social">
             <div>
@@ -40,11 +48,17 @@
         </div>
     </div>
     <script>
+        // var audio = new Audio("https://files.catbox.moe/dtb65f.mp3");
+        // audio.volume = 0.2; // กำหนดระดับเสียง
+        // audio.loop = true; // กำหนดให้เพลงวนซ้ำ
+        // audio.play();
+        
         var audio = new Audio("https://files.catbox.moe/dtb65f.mp3");
-        audio.volume = 0.2; // กำหนดระดับเสียง
-        audio.loop = true; // กำหนดให้เพลงวนซ้ำ
-        audio.play();
-
+        $("#body").click(function() {
+            audio.play();
+            audio.volume = 0.05;
+        });
+        AOS.init();
         anime.timeline({
             loop: false
         })
