@@ -79,8 +79,7 @@ body {
 
 @keyframes typing {
     0% { width: 0; }
-    80% { width: 80%; } /* ปรับค่านี้เพื่อให้สิ้นสุดที่ตัวอักษร N */
-    100% { width: 100%; }
+    100% { width: 40%; }
 }
 
 @keyframes blink-caret {
