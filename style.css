@@ -90,7 +90,7 @@ body {
 
 .subtitle1 {
     color: hsla(0, 0%, 100%,);
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     opacity: 0;
     transform: translateY(5rem);
     /* background-color: red; */
