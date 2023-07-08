@@ -104,7 +104,7 @@ body {
 }
 
 .subtitle2 {
-    transform: translateY(10rem);
+    transform: translateX(2rem) translateY(0.5rem);
     opacity: 0;
     animation: fadeInUp2 2s ease calc(var(--typewriterSpeed)) forwards;
 }
