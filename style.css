@@ -65,7 +65,7 @@ body {
     line-height: 1em;
 }
 
-/* เพิ่มส่วน CSS สำหรับการเพิ่ม typewriter animation */
+
 .letter {
   overflow: hidden;
   border-right: 0.15em solid orange;
@@ -73,13 +73,14 @@ body {
   margin: 0 auto;
   letter-spacing: 0.15em;
   animation:
-    typing 3.5s steps(40, end), /* เพิ่มเวลาหน่วง 2 วินาที */
+    typing 3.5s steps(40, end),
     blink-caret 0.75s step-end infinite;
 }
 
 @keyframes typing {
-  0% { width: 0}
-  100% { width: 33.5%} 
+    0% { width: 0; }
+    80% { width: 80%; } /* ปรับค่านี้เพื่อให้สิ้นสุดที่ตัวอักษร N */
+    100% { width: 100%; }
 }
 
 @keyframes blink-caret {
@@ -159,6 +160,34 @@ body {
     transform: translateX(-50%);
 }
 
+@media (width: 768px) {
+    @keyframes typing {
+        0% { width: 0; }
+        80% { width: 40%; } /* ปรับค่านี้เพื่อให้สิ้นสุดที่ตัวอักษร N */
+    }
+}
+
+@media (width: 1024px) {
+    @keyframes typing {
+        0% { width: 0; }
+        100% { width: 35%; } /* ปรับค่านี้เพื่อให้สิ้นสุดที่ตัวอักษร N */
+    }
+}
+
+@media (width: 820px) {
+    @keyframes typing {
+        0% { width: 0; }
+        100% { width: 38%; } /* ปรับค่านี้เพื่อให้สิ้นสุดที่ตัวอักษร N */
+    }
+}
+
+@media (width: 1440px) {
+    @keyframes typing {
+        0% { width: 0; }
+        100% { width: 35%; } /* ปรับค่านี้เพื่อให้สิ้นสุดที่ตัวอักษร N */
+    }
+}
+
 @media (width: 390px) {
     .content-social {
         width: 70%;
@@ -177,5 +206,9 @@ body {
     .content-social {
         width: 70%;
         left: 56%;
+    }
+    @keyframes typing {
+        0% { width: 0; }
+        100% { width: 80%; } /* ปรับค่านี้เพื่อให้สิ้นสุดที่ตัวอักษร N */
     }
 }
