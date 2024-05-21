@@ -22,6 +22,7 @@ body {
 
 #Background {
     position: fixed;
+    left: 0%;
     min-width: 100%;
     min-height: 100%;
     -webkit-filter: blur(5px);
