@@ -226,7 +226,15 @@ body {
         100% { width: 80%; } /* ปรับค่านี้เพื่อให้สิ้นสุดที่ตัวอักษร N */
     }
     .subtitle1 {
+        font-size: 1.2rem;
+    }
+    .subtitle2 {
         font-size: 1.0rem;
     }
     
 }
+
+/* .test2{
+
+    background-color: red;
+} */
