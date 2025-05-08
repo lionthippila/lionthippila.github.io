@@ -1,0 +1,62 @@
+body {
+    font-family: 'Kanit', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(bg.jpg);
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px);
+    z-index: -1;
+}
+
+.container {
+    background: white;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+#profile-img {
+    width: 80%;
+    border-radius: 10%;
+    border: 5px solid #fff;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+    padding: 10px;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.social-icons .btn {
+    width: 80px;
+    background: rgba(0, 0, 0, 0.150);
+    color: rgb(255, 255, 255);
+    margin: 5px;
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+.social-icons .btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.bi .fab {
+    font-size: 1.5rem;
+}
+
