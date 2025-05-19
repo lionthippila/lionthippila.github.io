@@ -88,8 +88,11 @@
       max-width: 700px;
       margin-left: auto;
       margin-right: auto;
-      white-space: nowrap; /* เพื่อไม่ให้ข้อความตัดบรรทัด */
+
+      /* ปรับให้แสดงบรรทัดเดียวบนจอใหญ่ */
+      white-space: nowrap;
       overflow: hidden;
+      text-overflow: ellipsis;
     }
     /* cursor กระพริบ */
     #cursor {
@@ -174,7 +177,11 @@
         font-size: 1.8rem;
       }
       .description {
-        font-size: 0.9rem;
+        /* บนหน้าจอเล็กเปลี่ยนให้ตัดบรรทัดอัตโนมัติ */
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        word-wrap: break-word;
       }
       .badge {
         font-size: 0.8rem;
