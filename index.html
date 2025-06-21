@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>lion_thippila</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: radial-gradient(circle at top, #270101, #000000);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+    }
+    header {
+      margin-top: 2rem;
+      max-width: 800px;
+      width: 100%;
+      border-radius: 5px;
+      background: #330c0c;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid #401a1a;
+      box-sizing: border-box;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .nav-links a {
+      color: #ccc;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      background: #401a1a;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      background: #7a1a1a;
+    }
+    .main {
+      text-align: center;
+      margin-top: 4rem;
+      max-width: 900px;
+      width: 100%;
+      padding: 0 1rem;
+      box-sizing: border-box;
+    }
+    .badge {
+      background: #e03e3e;
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .description {
+      color: #aaa;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+
+      /* ปรับให้แสดงบรรทัดเดียวบนจอใหญ่ */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    /* cursor กระพริบ */
+    #cursor {
+      display: inline-block;
+      color: #aaa;
+      animation: blinkCursor 1s step-start infinite;
+      font-weight: bold;
+      margin-left: 2px;
+    }
+    @keyframes blinkCursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .cards {
+      display: flex;
+      gap: 1rem;
+      margin-top: 3rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .card {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      background: linear-gradient(145deg, #111, #222);
+      text-align: center;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .card:hover {
+      box-shadow: 0 0 30px #e03e3e;
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: opacity 0.3s ease;
+    }
+    .card .hover-img {
+      opacity: 0;
+      z-index: 2;
+    }
+    .card:hover .hover-img {
+      opacity: 1;
+    }
+    .card:hover .default-img {
+      opacity: 0;
+    }
+    @media (max-width: 900px) {
+      .card {
+        width: 45%;
+        height: 250px;
+      }
+      .cards .card:nth-child(3) {
+        display: none;
+      }
+    }
+    @media (max-width: 768px) {
+      .social-icons {
+        position: static;
+        transform: none;
+        margin-top: 2rem;
+      }
+    }
+    @media (max-width: 600px) {
+      .card {
+        width: 90%;
+        height: 220px;
+      }
+      .cards .card:nth-child(2),
+      .cards .card:nth-child(3) {
+        display: none;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      .description {
+        /* บนหน้าจอเล็กเปลี่ยนให้ตัดบรรทัดอัตโนมัติ */
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        word-wrap: break-word;
+      }
+      .badge {
+        font-size: 0.8rem;
+        padding: 0.2rem 0.5rem;
+      }
+      header {
+        padding: 1rem;
+      }
+      .nav-links {
+        gap: 0.5rem;
+      }
+      .nav-links a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+      }
+    }
+    .social-icons {
+      margin-top: 3rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      font-size: 1.5rem;
+      background: #ff0000;
+      border-radius: 25%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s ease;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background: #7a1a1a;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-links">
+      <a href="#">🏠 HOME</a>
+      <a href="#">🖼️ GALLERY</a>
+      <a href="#">📌 PROFILE</a>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="badge">LION_THIPPILA</div>
+    <h1>SIRAPHOP THIPPILA</h1>
+    <p class="description" id="typing-text"></p>
+    <div class="cards">
+      <div class="card">
+        <img class="default-img" src="/profile2.webp" alt="Script 2" />
+        <img class="hover-img" src="/profile-hover.webp" alt="Script 2 Hover" />
+      </div>
+      <div class="card">
+        <img class="default-img" src="/profile2.webp" alt="Script 2" />
+        <img class="hover-img" src="/profile-hover.webp" alt="Script 2 Hover" />
+      </div>
+    </div>
+    <div class="social-icons">
+      <a href="https://twitter.com/WINRAR5555" target="_blank" class="btn hvr-buzz"><i class="bi bi-twitter" style="color:white;"></i></a>
+      <a href="https://www.facebook.com/lion.thippila/" target="_blank" class="btn hvr-buzz"><i class="bi bi-facebook" style="color:white;"></i></a>
+      <a href="https://www.instagram.com/lion_thippila/" target="_blank" class="btn hvr-buzz"><i class="bi bi-instagram" style="color:white;"></i></a>
+      <a href="https://www.tiktok.com/@_unlucky999" target="_blank" class="btn hvr-buzz"><i class="fab fa-tiktok" style="color:white;"></i></a>
+    </div>
+    <footer style="text-align:center; color:#888; padding:1rem; font-size:0.9rem; margin-top:4rem;">
+          © 2025 Siraphop Thippila. Do what you love, love what you do ❤️
+    </footer>
+  </main>
+
+  <script>
+    const text = "Hello! Welcome to my portfolio. Thanks for visiting my site!";
+    const typingSpeed = 70;
+    const deletingSpeed = 50;
+    const pauseTime = 1500;
+
+    let i = 0;
+    let isDeleting = false;
+    const el = document.getElementById("typing-text");
+
+    function typeLoop() {
+      if (!isDeleting) {
+        el.innerHTML = text.substring(0, i + 1) + '<span id="cursor">|</span>';
+        i++;
+        if (i === text.length) {
+          isDeleting = true;
+          setTimeout(typeLoop, pauseTime);
+        } else {
+          setTimeout(typeLoop, typingSpeed);
+        }
+      } else {
+        el.innerHTML = text.substring(0, i - 1) + '<span id="cursor">|</span>';
+        i--;
+        if (i === 0) {
+          isDeleting = false;
+          setTimeout(typeLoop, pauseTime);
+        } else {
+          setTimeout(typeLoop, deletingSpeed);
+        }
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      typeLoop();
+    });
+
+    var audio = new Audio("https://files.catbox.moe/fnkn3i.mp3");
+    document.body.addEventListener("click", function() {
+      audio.volume = 0.05;
+      audio.play();
+    });
+
+    AOS.init();
+
+    anime.timeline({ loop: false })
+      .add({
+        targets: '.ml13 .letter',
+        translateY: [50, 0],
+        translateZ: 0,
+        opacity: [0, 1],
+        easing: "easeOutExpo",
+        duration: 1400,
+        delay: (el, i) => 300 + 30 * i
+      });
+  </script>
+</body>
+</html>
