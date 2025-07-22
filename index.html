@@ -13,7 +13,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
   <link rel="apple-touch-icon" href="icon.png">
-
   <style>
     * {
       margin: 0;
@@ -61,6 +60,15 @@
     .nav-links a:hover {
       background: #7a1a1a;
     }
+    .nav-links a.active {
+      background: #e03e3e;
+      color: #fff;
+      box-shadow: 0 0 0 1px #fff2 inset;
+      border: 1px solid #fff2;
+      transform: scale(1.08);
+      z-index: 1;
+      position: relative;
+    }
     .main {
       text-align: center;
       margin-top: 4rem;
@@ -91,12 +99,11 @@
       margin-left: auto;
       margin-right: auto;
 
-      /* ปรับให้แสดงบรรทัดเดียวบนจอใหญ่ */
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    /* cursor กระพริบ */
+    
     #cursor {
       display: inline-block;
       color: #aaa;
@@ -179,7 +186,6 @@
         font-size: 1.8rem;
       }
       .description {
-        /* บนหน้าจอเล็กเปลี่ยนให้ตัดบรรทัดอัตโนมัติ */
         white-space: normal;
         overflow: visible;
         text-overflow: clip;
@@ -227,9 +233,9 @@
 <body>
   <header>
     <div class="nav-links">
-      <a href="#">🏠 HOME</a>
-      <a href="#">🖼️ GALLERY</a>
-      <a href="#">📌 PROFILE</a>
+      <a href="index.html" class="active">🏠 HOME</a>
+      <a href="gallery.html">🖼️ GALLERY</a>
+      <a href="profile.html">📌 PROFILE</a>
     </div>
   </header>
 
@@ -312,6 +318,14 @@
         duration: 1400,
         delay: (el, i) => 300 + 30 * i
       });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
   </script>
 </body>
 </html>
