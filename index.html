@@ -4,15 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>lion_thippila</title>
+  
+  <meta name="description" content="Portfolio of Siraphop Thippila (LION_THIPPILA)">
+  <meta property="og:title" content="LION_THIPPILA Portfolio" />
+  <meta property="og:description" content="Siraphop Thippila's personal website" />
+  <meta property="og:image" content="https://lionthippila.github.io/preview.jpg" />
+  <meta property="og:url" content="https://lionthippila.github.io/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" />
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  
   <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
   <link rel="apple-touch-icon" href="icon.png">
+
   <style>
     * {
       margin: 0;
@@ -231,11 +239,13 @@
   </style>
 </head>
 <body>
+  <audio id="bg-audio" preload="auto" src="https://files.catbox.moe/fnkn3i.mp3"></audio>
+
   <header>
     <div class="nav-links">
       <a href="index.html" class="active">🏠 HOME</a>
-      <a href="gallery.html">🖼️ GALLERY</a>
-      <a href="profile.html">📌 PROFILE</a>
+      <a href="index.html">🖼️ GALLERY</a>
+      <a href="index.html">📌 PROFILE</a>
     </div>
   </header>
 
@@ -243,26 +253,32 @@
     <div class="badge">LION_THIPPILA</div>
     <h1>SIRAPHOP THIPPILA</h1>
     <p class="description" id="typing-text"></p>
+
     <div class="cards">
       <div class="card">
-        <img class="default-img" src="/profile2.webp" alt="Script 2" />
-        <img class="hover-img" src="/profile-hover.webp" alt="Script 2 Hover" />
+        <img class="default-img" src="/profile2.webp" alt="Siraphop profile default" />
+        <img class="hover-img" src="/profile-hover.webp" alt="Siraphop profile hover" />
       </div>
       <div class="card">
-        <img class="default-img" src="/profile2.webp" alt="Script 2" />
-        <img class="hover-img" src="/profile-hover.webp" alt="Script 2 Hover" />
+        <img class="default-img" src="/profile2.webp" alt="Siraphop profile default" />
+        <img class="hover-img" src="/profile-hover.webp" alt="Siraphop profile hover" />
       </div>
     </div>
+
     <div class="social-icons">
       <a href="https://twitter.com/WINRAR5555" target="_blank" class="btn hvr-buzz"><i class="bi bi-twitter" style="color:white;"></i></a>
       <a href="https://www.facebook.com/lion.thippila/" target="_blank" class="btn hvr-buzz"><i class="bi bi-facebook" style="color:white;"></i></a>
       <a href="https://www.instagram.com/lion_thippila/" target="_blank" class="btn hvr-buzz"><i class="bi bi-instagram" style="color:white;"></i></a>
       <a href="https://www.tiktok.com/@_unlucky999" target="_blank" class="btn hvr-buzz"><i class="fab fa-tiktok" style="color:white;"></i></a>
     </div>
+
     <footer style="text-align:center; color:#888; padding:1rem; font-size:0.9rem; margin-top:4rem;">
-          © 2025 Siraphop Thippila. Do what you love, love what you do ❤️
+      © 2025 Siraphop Thippila. Do what you love, love what you do ❤️
     </footer>
   </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
   <script>
     const text = "Hello! Welcome to my portfolio. Thanks for visiting my site!";
@@ -300,28 +316,26 @@
       typeLoop();
     });
 
-    var audio = new Audio("https://files.catbox.moe/fnkn3i.mp3");
     document.body.addEventListener("click", function() {
+      const audio = document.getElementById("bg-audio");
       audio.volume = 0.05;
       audio.play();
     });
 
     AOS.init();
 
-    anime.timeline({ loop: false })
-      .add({
-        targets: '.ml13 .letter',
-        translateY: [50, 0],
-        translateZ: 0,
-        opacity: [0, 1],
-        easing: "easeOutExpo",
-        duration: 1400,
-        delay: (el, i) => 300 + 30 * i
-      });
+    anime.timeline({ loop: false }).add({
+      targets: '.ml13 .letter',
+      translateY: [50, 0],
+      translateZ: 0,
+      opacity: [0, 1],
+      easing: "easeOutExpo",
+      duration: 1400,
+      delay: (el, i) => 300 + 30 * i
+    });
 
     document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
+      link.addEventListener('click', function() {
         document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
         this.classList.add('active');
       });
