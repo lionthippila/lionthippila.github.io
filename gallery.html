@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#09090d">
+  <meta name="description" content="Photo gallery of Siraphop Thippila.">
+
+  <title>Gallery | LION_THIPPILA</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <style>
+    :root {
+      --bg: #09090d;
+      --surface: rgba(255,255,255,.055);
+      --surface-hover: rgba(255,255,255,.09);
+      --text: #f5f5f7;
+      --muted: #92929e;
+      --accent: #ff454f;
+      --border: rgba(255,255,255,.09);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(circle at 75% 18%, rgba(255,69,79,.15), transparent 24rem),
+        radial-gradient(circle at 12% 72%, rgba(125,40,60,.10), transparent 28rem),
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size: auto, auto, 48px 48px, 48px 48px;
+      content: "";
+      pointer-events: none;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 18px;
+      z-index: 10;
+      width: min(92%, 1120px);
+      margin: 28px auto 0;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(15,15,20,.78);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .nav-links a {
+      padding: 11px 16px;
+      border-radius: 12px;
+      color: var(--muted);
+      font-size: .85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: .25s ease;
+    }
+
+    .nav-links a:hover {
+      background: var(--surface-hover);
+      color: #fff;
+    }
+
+    .nav-links a.active {
+      background: linear-gradient(135deg, #ff454f, #c91f35);
+      color: #fff;
+    }
+
+    main {
+      width: min(100% - 32px, 1120px);
+      min-height: calc(100vh - 118px);
+      margin: 0 auto;
+      padding: 76px 24px 40px;
+    }
+
+    .intro {
+      margin-bottom: 38px;
+      text-align: center;
+      animation: fade-up .7s ease both;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 9px 16px;
+      border: 1px solid rgba(255,69,79,.25);
+      border-radius: 50px;
+      background: rgba(255,69,79,.07);
+      color: #ff777f;
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    .badge::before {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+      content: "";
+    }
+
+    h1 {
+      margin-bottom: 14px;
+      font-size: clamp(2.7rem, 8vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -3px;
+      line-height: 1.05;
+    }
+
+    h1 span {
+      background: linear-gradient(120deg, #fff 20%, #ff858b 55%, #ff454f 100%);
+      background-clip: text;
+      color: transparent;
+      -webkit-background-clip: text;
+    }
+
+    .description {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .description code {
+      color: #ff858b;
+    }
+
+    .gallery-status {
+      min-height: 24px;
+      margin: 24px 0;
+      color: var(--muted);
+      font-size: .9rem;
+      text-align: center;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+      gap: 18px;
+    }
+
+    .gallery-card {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #121218;
+      color: var(--text);
+      text-decoration: none;
+      transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+    }
+
+    .gallery-card:hover,
+    .gallery-card:focus-visible {
+      transform: translateY(-5px);
+      border-color: rgba(255,69,79,.5);
+      box-shadow: 0 14px 36px rgba(255,40,60,.12);
+      outline: none;
+    }
+
+    .gallery-card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: #17171e;
+      object-fit: cover;
+      transition: transform .45s ease;
+    }
+
+    .gallery-card:hover img {
+      transform: scale(1.04);
+    }
+
+    .gallery-card figcaption {
+      overflow: hidden;
+      padding: 13px 15px;
+      color: #d7d7de;
+      font-size: .85rem;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    footer {
+      margin-top: 70px;
+      padding: 30px 15px 40px;
+      border-top: 1px solid rgba(255,255,255,.05);
+      color: #777782;
+      font-size: .82rem;
+      text-align: center;
+    }
+
+    footer span {
+      color: #ff6b75;
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 58px 8px 32px;
+      }
+
+      h1 {
+        letter-spacing: -1.5px;
+      }
+
+      .gallery-grid {
+        gap: 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index.html">⌂ HOME</a>
+      <a href="gallery.html" class="active" aria-current="page">▧ GALLERY</a>
+      <a href="index.html">◉ PROFILE</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="gallery-title">
+      <div class="badge">LION_THIPPILA</div>
+      <h1 id="gallery-title">MY <span>GALLERY</span></h1>
+      <p class="description">Images are loaded automatically from the <code>gallery/</code> folder.</p>
+    </section>
+
+    <p class="gallery-status" id="gallery-status" role="status" aria-live="polite">Loading images...</p>
+    <section class="gallery-grid" id="gallery-grid" aria-label="Photo gallery" aria-busy="true"></section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Siraphop Thippila.
+    Do what you love, love what you do <span>♥</span>
+  </footer>
+
+  <script>
+    const galleryApiUrl = "https://api.github.com/repos/lionthippila/lionthippila.github.io/contents/gallery?ref=main&per_page=1000";
+    const imageExtensions = new Set([".avif", ".gif", ".jpeg", ".jpg", ".png", ".webp"]);
+    const galleryGrid = document.getElementById("gallery-grid");
+    const galleryStatus = document.getElementById("gallery-status");
+
+    function isImageFile(file) {
+      const extension = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
+      return file.type === "file" && imageExtensions.has(extension) && file.download_url;
+    }
+
+    function addGalleryImage(file) {
+      const link = document.createElement("a");
+      link.className = "gallery-card";
+      link.href = file.download_url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.setAttribute("aria-label", `Open ${file.name}`);
+
+      const figure = document.createElement("figure");
+      const image = document.createElement("img");
+      image.src = file.download_url;
+      image.alt = file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " ");
+      image.loading = "lazy";
+      image.decoding = "async";
+
+      const caption = document.createElement("figcaption");
+      caption.textContent = file.name;
+
+      figure.append(image, caption);
+      link.append(figure);
+      galleryGrid.append(link);
+    }
+
+    async function loadGallery() {
+      try {
+        const response = await fetch(galleryApiUrl, {
+          headers: { Accept: "application/vnd.github+json" }
+        });
+
+        if (!response.ok) {
+          throw new Error(`GitHub API returned ${response.status}`);
+        }
+
+        const files = await response.json();
+        if (!Array.isArray(files)) {
+          throw new Error("The gallery folder response was not a file list");
+        }
+
+        const images = files.filter(isImageFile).sort((a, b) => a.name.localeCompare(b.name));
+        if (images.length === 0) {
+          galleryStatus.textContent = "No images found yet. Add image files to the gallery/ folder.";
+          return;
+        }
+
+        images.forEach(addGalleryImage);
+        galleryStatus.textContent = `${images.length} image${images.length === 1 ? "" : "s"} loaded.`;
+      } catch (error) {
+        console.error("Could not load gallery images.", error);
+        galleryStatus.textContent = "Could not load images. Check your connection and try again.";
+      } finally {
+        galleryGrid.setAttribute("aria-busy", "false");
+      }
+    }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    loadGallery();
+  </script>
+</body>
+</html>
