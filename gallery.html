@@ -147,15 +147,6 @@
       -webkit-background-clip: text;
     }
 
-    .description {
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .description code {
-      color: #ff858b;
-    }
-
     .gallery-status {
       min-height: 24px;
       margin: 24px 0;
@@ -199,15 +190,6 @@
 
     .gallery-card:hover img {
       transform: scale(1.04);
-    }
-
-    .gallery-card figcaption {
-      overflow: hidden;
-      padding: 13px 15px;
-      color: #d7d7de;
-      font-size: .85rem;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
 
     footer {
@@ -266,7 +248,6 @@
     <section class="intro" aria-labelledby="gallery-title">
       <div class="badge">LION_THIPPILA</div>
       <h1 id="gallery-title">MY <span>GALLERY</span></h1>
-      <p class="description">Images are loaded automatically from the <code>gallery/</code> folder.</p>
     </section>
 
     <p class="gallery-status" id="gallery-status" role="status" aria-live="polite">Loading images...</p>
@@ -281,8 +262,15 @@
   <script>
     const galleryApiUrl = "https://api.github.com/repos/lionthippila/lionthippila.github.io/contents/gallery?ref=main&per_page=1000";
     const imageExtensions = new Set([".avif", ".gif", ".jpeg", ".jpg", ".png", ".webp"]);
+    const localPreviewFiles = ["IMG_9311.jpg", "IMG_9424.jpg", "livephoto-export-image-3.jpg"];
     const galleryGrid = document.getElementById("gallery-grid");
     const galleryStatus = document.getElementById("gallery-status");
+
+    function isLocalPreview() {
+      return location.protocol === "file:"
+        || location.hostname === "localhost"
+        || location.hostname === "127.0.0.1";
+    }
 
     function isImageFile(file) {
       const extension = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
@@ -295,24 +283,22 @@
       link.href = file.download_url;
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-      link.setAttribute("aria-label", `Open ${file.name}`);
+      link.setAttribute("aria-label", "View full-size image");
 
-      const figure = document.createElement("figure");
       const image = document.createElement("img");
       image.src = file.download_url;
-      image.alt = file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " ");
+      image.alt = "";
       image.loading = "lazy";
       image.decoding = "async";
 
-      const caption = document.createElement("figcaption");
-      caption.textContent = file.name;
-
-      figure.append(image, caption);
-      link.append(figure);
+      link.append(image);
       galleryGrid.append(link);
     }
 
     async function loadGallery() {
+      let images = [];
+      let apiError = null;
+
       try {
         const response = await fetch(galleryApiUrl, {
           headers: { Accept: "application/vnd.github+json" }
@@ -327,20 +313,32 @@
           throw new Error("The gallery folder response was not a file list");
         }
 
-        const images = files.filter(isImageFile).sort((a, b) => a.name.localeCompare(b.name));
-        if (images.length === 0) {
-          galleryStatus.textContent = "No images found yet. Add image files to the gallery/ folder.";
-          return;
-        }
-
-        images.forEach(addGalleryImage);
-        galleryStatus.textContent = `${images.length} image${images.length === 1 ? "" : "s"} loaded.`;
+        images = files.filter(isImageFile).sort((a, b) => a.name.localeCompare(b.name));
       } catch (error) {
         console.error("Could not load gallery images.", error);
-        galleryStatus.textContent = "Could not load images. Check your connection and try again.";
-      } finally {
-        galleryGrid.setAttribute("aria-busy", "false");
+        apiError = error;
       }
+
+      if (images.length === 0 && isLocalPreview()) {
+        images = localPreviewFiles.map(name => ({
+          name,
+          download_url: `gallery/${encodeURIComponent(name)}`
+        }));
+        galleryStatus.textContent = apiError
+          ? "Showing local preview images. The GitHub image list is unavailable."
+          : "Showing local preview images.";
+      } else if (images.length === 0) {
+        galleryStatus.textContent = apiError
+          ? "Could not load images. Check your connection and try again."
+          : "No images yet.";
+        galleryGrid.setAttribute("aria-busy", "false");
+        return;
+      } else {
+        galleryStatus.textContent = `${images.length} image${images.length === 1 ? "" : "s"} loaded.`;
+      }
+
+      images.forEach(addGalleryImage);
+      galleryGrid.setAttribute("aria-busy", "false");
     }
 
     document.getElementById("year").textContent = new Date().getFullYear();
