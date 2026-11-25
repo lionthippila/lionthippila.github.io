@@ -551,6 +551,7 @@
       Do what you love, love what you do <span>♥</span>
     </footer>
   </main>
+
   <script src="music.js"></script>
   <script>
     // Typing animation
@@ -603,42 +604,6 @@
         });
         this.classList.add("active");
       });
-    });
-
-    const audio = document.getElementById("bg-audio");
-    const musicToggle = document.getElementById("music-toggle");
-    const musicIcon = musicToggle.querySelector("i");
-    audio.volume = 0.05;
-
-    function updateMusicControl() {
-      const isPlaying = !audio.paused;
-      musicToggle.setAttribute("aria-pressed", String(isPlaying));
-      musicToggle.setAttribute("aria-label", isPlaying ? "Pause background music" : "Play background music");
-      musicToggle.title = isPlaying ? "Pause background music" : "Play background music";
-      musicIcon.className = isPlaying ? "bi bi-pause-fill" : "bi bi-play-fill";
-    }
-
-    musicToggle.addEventListener("click", function() {
-      if (audio.paused) {
-        audio.play().catch(error => {
-          console.error("Could not play background music.", error);
-          updateMusicControl();
-        });
-      } else {
-        audio.pause();
-      }
-    });
-
-    audio.addEventListener("play", updateMusicControl);
-    audio.addEventListener("pause", updateMusicControl);
-    audio.addEventListener("error", function() {
-      musicToggle.setAttribute("aria-label", "Background music could not be loaded");
-      musicToggle.title = "Background music could not be loaded";
-      console.error("Could not load background music.", audio.error);
-    });
-
-    audio.play().catch(() => {
-      updateMusicControl();
     });
 
     AOS.init();
