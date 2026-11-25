@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,6 +56,8 @@
       pointer-events: none;
     }
 
+    /* Navbar */
+
     .navbar {
       position: sticky;
       top: 18px;
@@ -94,6 +97,8 @@
       background: linear-gradient(135deg, #ff454f, #c91f35);
       color: #fff;
     }
+
+    /* Main */
 
     main {
       width: min(100% - 32px, 1120px);
@@ -155,6 +160,8 @@
       text-align: center;
     }
 
+    /* Gallery */
+
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
@@ -162,12 +169,14 @@
     }
 
     .gallery-card {
+      display: block;
       overflow: hidden;
+      width: 100%;
+      padding: 0;
       border: 1px solid var(--border);
       border-radius: 20px;
       background: #121218;
-      color: var(--text);
-      text-decoration: none;
+      cursor: pointer;
       transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
     }
 
@@ -191,6 +200,103 @@
     .gallery-card:hover img {
       transform: scale(1.04);
     }
+
+    /* Lightbox */
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 70px;
+      background: rgba(0,0,0,.90);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .3s ease, visibility .3s ease;
+    }
+
+    .lightbox.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox img {
+      display: block;
+      max-width: 100%;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 20px 80px rgba(0,0,0,.6);
+      transform: scale(.94);
+      transition: transform .3s ease;
+    }
+
+    .lightbox.active img {
+      transform: scale(1);
+    }
+
+    .lightbox-close,
+    .lightbox-prev,
+    .lightbox-next {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 14px;
+      background: rgba(255,255,255,.09);
+      color: white;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .lightbox-close {
+      top: 25px;
+      right: 25px;
+      width: 48px;
+      height: 48px;
+      font-size: 28px;
+    }
+
+    .lightbox-prev,
+    .lightbox-next {
+      top: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 20px;
+      transform: translateY(-50%);
+    }
+
+    .lightbox-prev {
+      left: 25px;
+    }
+
+    .lightbox-next {
+      right: 25px;
+    }
+
+    .lightbox-close:hover,
+    .lightbox-prev:hover,
+    .lightbox-next:hover {
+      background: #ff454f;
+      border-color: #ff454f;
+    }
+
+    .lightbox-counter {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,.7);
+      font-size: .85rem;
+      letter-spacing: 2px;
+    }
+
+    /* Music */
+
     .music-toggle {
       position: fixed;
       right: 24px;
@@ -217,6 +323,9 @@
       box-shadow: 0 8px 25px rgba(255,69,79,.12);
       color: #ff737b;
     }
+
+    /* Footer */
+
     footer {
       margin-top: 70px;
       padding: 30px 15px 40px;
@@ -231,9 +340,17 @@
     }
 
     @keyframes fade-up {
-      from { opacity: 0; transform: translateY(18px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
+
+    /* Mobile */
 
     @media (max-width: 600px) {
       main {
@@ -247,10 +364,43 @@
       .gallery-grid {
         gap: 12px;
       }
+
+      .lightbox {
+        padding: 55px 12px;
+      }
+
+      .lightbox img {
+        max-width: 100%;
+        max-height: 75vh;
+      }
+
+      .lightbox-prev {
+        left: 8px;
+      }
+
+      .lightbox-next {
+        right: 8px;
+      }
+
+      .lightbox-prev,
+      .lightbox-next {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+      }
+
+      .lightbox-close {
+        top: 12px;
+        right: 12px;
+        width: 42px;
+        height: 42px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
+      *,
+      *::before,
+      *::after {
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
         scroll-behavior: auto !important;
@@ -261,6 +411,51 @@
 </head>
 
 <body>
+
+  <!-- Background Music -->
+  <audio id="bg-audio" preload="auto" loop src="Heather.mp3"></audio>
+
+  <button class="music-toggle" id="music-toggle"
+          type="button"
+          aria-label="Play background music"
+          aria-pressed="false"
+          title="Play background music">
+    <i class="bi bi-play-fill" aria-hidden="true"></i>
+  </button>
+
+  <!-- Lightbox -->
+  <div class="lightbox"
+       id="lightbox"
+       role="dialog"
+       aria-modal="true"
+       aria-label="Image preview"
+       aria-hidden="true">
+
+    <button class="lightbox-close"
+            id="lightbox-close"
+            type="button"
+            aria-label="Close image">&times;</button>
+
+    <button class="lightbox-prev"
+            id="lightbox-prev"
+            type="button"
+            aria-label="Previous image">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+
+    <img id="lightbox-image" src="" alt="Gallery preview">
+
+    <button class="lightbox-next"
+            id="lightbox-next"
+            type="button"
+            aria-label="Next image">
+      <i class="bi bi-chevron-right"></i>
+    </button>
+
+    <div class="lightbox-counter" id="lightbox-counter"></div>
+  </div>
+
+  <!-- Navbar -->
   <header class="navbar">
     <nav class="nav-links" aria-label="Main navigation">
       <a href="index.html">⌂ HOME</a>
@@ -269,64 +464,210 @@
     </nav>
   </header>
 
+  <!-- Main -->
   <main>
     <section class="intro" aria-labelledby="gallery-title">
       <div class="badge">LION_THIPPILA</div>
       <h1 id="gallery-title">MY <span>GALLERY</span></h1>
     </section>
 
-    <p class="gallery-status" id="gallery-status" role="status" aria-live="polite">Loading images...</p>
-    <section class="gallery-grid" id="gallery-grid" aria-label="Photo gallery" aria-busy="true"></section>
+    <p class="gallery-status"
+       id="gallery-status"
+       role="status"
+       aria-live="polite">
+      Loading images...
+    </p>
+
+    <section class="gallery-grid"
+             id="gallery-grid"
+             aria-label="Photo gallery"
+             aria-busy="true">
+    </section>
   </main>
 
+  <!-- Footer -->
   <footer>
     © <span id="year"></span> Siraphop Thippila.
     Do what you love, love what you do <span>♥</span>
   </footer>
 
+  <script src="music.js"></script>
+
   <script>
-    const galleryApiUrl = "https://api.github.com/repos/lionthippila/lionthippila.github.io/contents/gallery?ref=main&per_page=1000";
-    const imageExtensions = new Set([".avif", ".gif", ".jpeg", ".jpg", ".png", ".webp"]);
-    const localPreviewFiles = ["IMG_9311.jpg", "IMG_9424.jpg", "livephoto-export-image-3.jpg"];
+    // GitHub API
+    const galleryApiUrl =
+      "https://api.github.com/repos/lionthippila/lionthippila.github.io/contents/gallery?ref=main&per_page=1000";
+
+    const imageExtensions = new Set([
+      ".avif", ".gif", ".jpeg", ".jpg", ".png", ".webp"
+    ]);
+
+    const localPreviewFiles = [
+      "IMG_9311.jpg",
+      "IMG_9424.jpg",
+      "livephoto-export-image-3.jpg"
+    ];
+
     const galleryGrid = document.getElementById("gallery-grid");
     const galleryStatus = document.getElementById("gallery-status");
 
+    // Gallery image list
+    const galleryImages = [];
+
+    // Lightbox elements
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightbox-image");
+    const lightboxCounter = document.getElementById("lightbox-counter");
+
+    let currentImageIndex = 0;
+    let previousFocusedElement = null;
+
+    // Check local preview
     function isLocalPreview() {
       return location.protocol === "file:"
         || location.hostname === "localhost"
         || location.hostname === "127.0.0.1";
     }
 
+    // Check image extension
     function isImageFile(file) {
-      const extension = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
-      return file.type === "file" && imageExtensions.has(extension) && file.download_url;
+      const extension = file.name.slice(
+        file.name.lastIndexOf(".")
+      ).toLowerCase();
+
+      return file.type === "file"
+        && imageExtensions.has(extension)
+        && file.download_url;
     }
 
+    // Add image to gallery
     function addGalleryImage(file) {
-      const link = document.createElement("a");
-      link.className = "gallery-card";
-      link.href = file.download_url;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.setAttribute("aria-label", "View full-size image");
+      const card = document.createElement("button");
+
+      card.className = "gallery-card";
+      card.type = "button";
+      card.setAttribute("aria-label", `View ${file.name}`);
 
       const image = document.createElement("img");
+
       image.src = file.download_url;
-      image.alt = "";
+      image.alt = file.name;
       image.loading = "lazy";
       image.decoding = "async";
 
-      link.append(image);
-      galleryGrid.append(link);
+      card.append(image);
+      galleryGrid.append(card);
+
+      const index = galleryImages.length;
+      galleryImages.push({
+        url: file.download_url,
+        name: file.name
+      });
+
+      card.addEventListener("click", () => {
+        openLightbox(index);
+      });
     }
 
+    // Open Lightbox
+    function openLightbox(index) {
+      if (!galleryImages.length) return;
+
+      previousFocusedElement = document.activeElement;
+      currentImageIndex = index;
+
+      showLightboxImage();
+
+      lightbox.classList.add("active");
+      lightbox.setAttribute("aria-hidden", "false");
+
+      document.body.style.overflow = "hidden";
+
+      document.getElementById("lightbox-close").focus();
+    }
+
+    // Show current image
+    function showLightboxImage() {
+      const image = galleryImages[currentImageIndex];
+
+      if (!image) return;
+
+      lightboxImage.src = image.url;
+      lightboxImage.alt = image.name;
+
+      lightboxCounter.textContent =
+        `${currentImageIndex + 1} / ${galleryImages.length}`;
+    }
+
+    // Close Lightbox
+    function closeLightbox() {
+      lightbox.classList.remove("active");
+      lightbox.setAttribute("aria-hidden", "true");
+
+      document.body.style.overflow = "";
+
+      lightboxImage.src = "";
+
+      if (previousFocusedElement) {
+        previousFocusedElement.focus();
+      }
+    }
+
+    // Change image
+    function changeImage(direction) {
+      if (!galleryImages.length) return;
+
+      currentImageIndex =
+        (currentImageIndex + direction + galleryImages.length)
+        % galleryImages.length;
+
+      showLightboxImage();
+    }
+
+    // Lightbox buttons
+    document.getElementById("lightbox-close")
+      .addEventListener("click", closeLightbox);
+
+    document.getElementById("lightbox-prev")
+      .addEventListener("click", () => changeImage(-1));
+
+    document.getElementById("lightbox-next")
+      .addEventListener("click", () => changeImage(1));
+
+    // Click outside image to close
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    // Keyboard controls
+    document.addEventListener("keydown", (event) => {
+      if (!lightbox.classList.contains("active")) return;
+
+      if (event.key === "Escape") {
+        closeLightbox();
+      }
+
+      if (event.key === "ArrowLeft") {
+        changeImage(-1);
+      }
+
+      if (event.key === "ArrowRight") {
+        changeImage(1);
+      }
+    });
+
+    // Load gallery from GitHub
     async function loadGallery() {
       let images = [];
       let apiError = null;
 
       try {
         const response = await fetch(galleryApiUrl, {
-          headers: { Accept: "application/vnd.github+json" }
+          headers: {
+            Accept: "application/vnd.github+json"
+          }
         });
 
         if (!response.ok) {
@@ -334,40 +675,56 @@
         }
 
         const files = await response.json();
+
         if (!Array.isArray(files)) {
           throw new Error("The gallery folder response was not a file list");
         }
 
-        images = files.filter(isImageFile).sort((a, b) => a.name.localeCompare(b.name));
+        images = files
+          .filter(isImageFile)
+          .sort((a, b) => a.name.localeCompare(b.name));
+
       } catch (error) {
         console.error("Could not load gallery images.", error);
         apiError = error;
       }
 
+      // Local preview fallback
       if (images.length === 0 && isLocalPreview()) {
         images = localPreviewFiles.map(name => ({
           name,
           download_url: `gallery/${encodeURIComponent(name)}`
         }));
+
         galleryStatus.textContent = apiError
           ? "Showing local preview images. The GitHub image list is unavailable."
           : "Showing local preview images.";
+
       } else if (images.length === 0) {
         galleryStatus.textContent = apiError
           ? "Could not load images. Check your connection and try again."
           : "No images yet.";
+
         galleryGrid.setAttribute("aria-busy", "false");
         return;
+
       } else {
-        galleryStatus.textContent = `${images.length} image${images.length === 1 ? "" : "s"} loaded.`;
+        galleryStatus.textContent =
+          `${images.length} image${images.length === 1 ? "" : "s"} loaded.`;
       }
 
       images.forEach(addGalleryImage);
+
       galleryGrid.setAttribute("aria-busy", "false");
     }
 
-    document.getElementById("year").textContent = new Date().getFullYear();
+    // Current year
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    // Start loading
     loadGallery();
   </script>
+
 </body>
 </html>
