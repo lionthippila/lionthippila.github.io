@@ -10,6 +10,7 @@
   <title>Gallery | LION_THIPPILA</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://images.weserv.nl" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -194,7 +195,11 @@
       aspect-ratio: 4 / 3;
       background: #17171e;
       object-fit: cover;
-      transition: transform .45s ease;
+      transition: transform .45s ease, opacity .25s ease;
+    }
+
+    .gallery-card img.is-loading {
+      opacity: .55;
     }
 
     .gallery-card:hover img {
@@ -243,6 +248,7 @@
     .lightbox-prev,
     .lightbox-next {
       position: absolute;
+      z-index: 2;
       display: grid;
       place-items: center;
       border: 1px solid rgba(255,255,255,.15);
@@ -352,6 +358,25 @@
 
     /* Mobile */
 
+    @media (max-width: 700px) {
+      .navbar {
+        width: calc(100% - 24px);
+        top: 10px;
+        margin-top: 14px;
+        padding: 8px;
+        border-radius: 14px;
+      }
+
+      .nav-links {
+        gap: 4px;
+      }
+
+      .nav-links a {
+        padding: 10px 12px;
+        font-size: .78rem;
+      }
+    }
+
     @media (max-width: 600px) {
       main {
         padding: 58px 8px 32px;
@@ -394,6 +419,13 @@
         right: 12px;
         width: 42px;
         height: 42px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .nav-links a {
+        padding: 9px 10px;
+        font-size: .72rem;
       }
     }
 
@@ -540,8 +572,17 @@
         && file.download_url;
     }
 
+    // Create a smaller WebP thumbnail for the grid.
+    // The original GitHub image is kept for the full-size lightbox.
+    function getThumbnailUrl(originalUrl) {
+      if (!/^https?:\/\//i.test(originalUrl)) return originalUrl;
+
+      const encodedUrl = encodeURIComponent(originalUrl);
+      return `https://images.weserv.nl/?url=${encodedUrl}&w=480&h=360&fit=cover&output=webp&q=76`;
+    }
+
     // Add image to gallery
-    function addGalleryImage(file) {
+    function addGalleryImage(file, index) {
       const card = document.createElement("button");
 
       card.className = "gallery-card";
@@ -549,18 +590,37 @@
       card.setAttribute("aria-label", `View ${file.name}`);
 
       const image = document.createElement("img");
+      const originalUrl = file.download_url;
+      const thumbnailUrl = getThumbnailUrl(originalUrl);
 
-      image.src = file.download_url;
       image.alt = file.name;
-      image.loading = "lazy";
       image.decoding = "async";
+      image.loading = index < 4 ? "eager" : "lazy";
+      image.fetchPriority = index < 2 ? "high" : "auto";
+      image.classList.add("is-loading");
+      let usingOriginalImage = false;
 
+      image.addEventListener("load", () => {
+        image.classList.remove("is-loading");
+      }, { once: true });
+
+      // If the image optimizer is unavailable, fall back to the original.
+      image.addEventListener("error", () => {
+        if (!usingOriginalImage) {
+          usingOriginalImage = true;
+          image.src = originalUrl;
+        } else {
+          image.classList.remove("is-loading");
+          image.alt = `${file.name} (unable to load)`;
+        }
+      });
+
+      image.src = thumbnailUrl;
       card.append(image);
       galleryGrid.append(card);
 
-      const index = galleryImages.length;
       galleryImages.push({
-        url: file.download_url,
+        url: originalUrl,
         name: file.name
       });
 
@@ -592,8 +652,10 @@
 
       if (!image) return;
 
-      lightboxImage.src = image.url;
       lightboxImage.alt = image.name;
+      lightboxImage.decoding = "async";
+      lightboxImage.fetchPriority = "high";
+      lightboxImage.src = image.url;
 
       lightboxCounter.textContent =
         `${currentImageIndex + 1} / ${galleryImages.length}`;
@@ -682,7 +744,7 @@
 
         images = files
           .filter(isImageFile)
-          .sort((a, b) => a.name.localeCompare(b.name));
+          .sort((a, b) => b.name.localeCompare(a.name, undefined, { numeric: true, sensitivity: "base" }));
 
       } catch (error) {
         console.error("Could not load gallery images.", error);
@@ -713,7 +775,7 @@
           `${images.length} image${images.length === 1 ? "" : "s"} loaded.`;
       }
 
-      images.forEach(addGalleryImage);
+      images.forEach((file, index) => addGalleryImage(file, index));
 
       galleryGrid.setAttribute("aria-busy", "false");
     }
