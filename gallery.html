@@ -57,6 +57,37 @@
       pointer-events: none;
     }
 
+    /* Background decoration — matches index.html */
+    .ambient {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: .13;
+      pointer-events: none;
+      z-index: -1;
+      animation: ambientFloat 12s ease-in-out infinite alternate;
+    }
+
+    .ambient-one {
+      background: #ff2638;
+      top: -160px;
+      left: -150px;
+    }
+
+    .ambient-two {
+      background: #772cff;
+      bottom: -200px;
+      right: -150px;
+      animation-delay: -5s;
+    }
+
+    @keyframes ambientFloat {
+      from { transform: translate(0,0); }
+      to { transform: translate(80px,50px); }
+    }
+
     /* Navbar */
 
     .navbar {
@@ -71,6 +102,13 @@
       background: rgba(15,15,20,.78);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 10px 40px rgba(0,0,0,.2);
+      animation: navEnter .8s ease both;
+    }
+
+    @keyframes navEnter {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .nav-links {
@@ -127,6 +165,7 @@
       font-size: .76rem;
       font-weight: 700;
       letter-spacing: 2px;
+      animation: fade-up .8s .15s both;
     }
 
     .badge::before {
@@ -136,10 +175,16 @@
       background: var(--accent);
       box-shadow: 0 0 12px var(--accent);
       content: "";
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      50% { opacity: .4; transform: scale(.8); }
     }
 
     h1 {
       margin-bottom: 14px;
+      animation: fade-up .9s .3s both;
       font-size: clamp(2.7rem, 8vw, 5rem);
       font-weight: 900;
       letter-spacing: -3px;
@@ -179,7 +224,27 @@
       background: #121218;
       cursor: pointer;
       transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+      opacity: 0;
+      animation: galleryCardEnter .65s ease forwards;
     }
+
+    @keyframes galleryCardEnter {
+      from { opacity: 0; transform: translateY(22px) scale(.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .gallery-card:nth-child(1) { animation-delay: .08s; }
+    .gallery-card:nth-child(2) { animation-delay: .14s; }
+    .gallery-card:nth-child(3) { animation-delay: .20s; }
+    .gallery-card:nth-child(4) { animation-delay: .26s; }
+    .gallery-card:nth-child(5) { animation-delay: .32s; }
+    .gallery-card:nth-child(6) { animation-delay: .38s; }
+    .gallery-card:nth-child(7) { animation-delay: .44s; }
+    .gallery-card:nth-child(8) { animation-delay: .50s; }
+    .gallery-card:nth-child(9) { animation-delay: .56s; }
+    .gallery-card:nth-child(10) { animation-delay: .62s; }
+    .gallery-card:nth-child(11) { animation-delay: .68s; }
+    .gallery-card:nth-child(12) { animation-delay: .74s; }
 
     .gallery-card:hover,
     .gallery-card:focus-visible {
@@ -438,11 +503,19 @@
         scroll-behavior: auto !important;
         transition-duration: .01ms !important;
       }
+
+      .gallery-card {
+        opacity: 1;
+        animation: none !important;
+      }
     }
   </style>
 </head>
 
 <body>
+
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
 
   <!-- Background Music -->
   <audio id="bg-audio" preload="auto" loop src="Heather.mp3"></audio>
